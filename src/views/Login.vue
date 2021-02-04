@@ -56,6 +56,15 @@ export default {
         );
       e.preventDefault();
     }
-  }
+  },
+  metaInfo: {
+    title: 'Iniciar sesión',
+    meta: [
+      {
+        name: 'description',
+        content: 'Inicia sesión en uocify para disfrutar de miles de canciones.'
+      }
+    ]
+  }  
 };
 </script>

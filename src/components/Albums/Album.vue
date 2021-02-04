@@ -1,8 +1,12 @@
 <template>
     <article class="album col-sm-6 col-md-4 col-lg-3 col-xl-2">
-        <img class="album-cover" :src="album.cover_medium" :alt="album.title">
+        <img class="album-cover" 
+            :srcset="`${album.cover_big}, ${album.cover_xl} 1.5x`" 
+            :src="album.cover_big" 
+            :alt="album.title" 
+            loading="lazy" />
         <span class="album-title">{{album.title}}</span>
-        <span class="album-artist">{{album.artist.name}}</span>
+        <span v-if="album.artist" class="album-artist">{{album.artist.name}}</span>
     </article>
 </template>
 
