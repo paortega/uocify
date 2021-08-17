@@ -11,7 +11,16 @@
 
 <script>
 export default {
-    name:'NotFound'
+    name:'NotFound',
+    metaInfo: {
+        title: '404 Error',
+        meta: [
+            {
+            name: 'description',
+            content: 'Error 404. Lo sentimos, no hemos podido encontrar la página que buscas'
+            }
+        ]
+    }    
 }
 </script>
 

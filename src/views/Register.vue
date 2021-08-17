@@ -58,6 +58,15 @@ export default {
         );
       e.preventDefault();
     }
-  }
+  },
+  metaInfo: {
+    title: 'Registrar',
+    meta: [
+      {
+        name: 'description',
+        content: 'Regístrate en uocify para disfrutar de miles de canciones.'
+      }
+    ]
+  }  
 };
 </script>

@@ -6,6 +6,8 @@ import Playlist from '@/views/Playlist'
 import Artist from '@/views/Artist'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
+import Playlist from '@/views/PlaylistDetail'
+import Artist from '@/views/ArtistDetail'
 import NotFound from '@/views/NotFound'
 
 Vue.use(VueRouter)
@@ -41,6 +43,16 @@ Vue.use(VueRouter)
     name:'artist',
     component: Artist
   },   
+  {
+    path: '/playlist/:id',
+    name: 'Playlist',
+    component: Playlist
+  },
+  {
+    path: '/artist/:id',
+    name: 'Artist',
+    component: Artist
+  },  
   {
       path: '*',
       name:'notfound',

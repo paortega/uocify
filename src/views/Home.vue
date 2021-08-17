@@ -53,13 +53,13 @@ export default {
         padding-right:30px;
 
         .logo{
-            width: 200px;
+            width: 150px;
             margin-top: 35px;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
         }
 
-        .container-thin{
-            max-width: 600px;
+        .main-content{
+            margin-top: 35px;
         }
     }
     .playlists{
