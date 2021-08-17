@@ -1,17 +1,48 @@
 <template>
     <main class="page-home">
-        <div class="container container-thin">
+        
+        <div class="container">
             <img class="logo" src="@/assets/icon.svg" alt="logo">
             <h1 class="main-title">¿En busca de música?</h1>
-            <p class="lorem-textum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tellus arcu, feugiat eu molestie in, finibus sit amet lorem. Phasellus consectetur ipsum in imperdiet ultrices. </p>
+            <!-- <b-overlay :show="show" rounded="sm"> -->
+                <section class="playlists row">
+                    <Playlists
+                        v-for="plays in dataPlaylists"
+                        :key="plays.id"
+                        :plays="plays"
+                    />
+                </section>
+             <!-- </b-overlay> -->
         </div>
     </main>
 </template>
 
 <script>
-    export default {
-        name:'Home',
+import Playlists from '@/components/Playlists.vue'
+import api from '@/api/api'
+
+export default {
+    name:'Home',
+    data() {
+        return {
+            dataPlaylists: [],
+            show: true
+        }
+    },
+    created() {
+        this.loadPlaylists()
+    },
+    components:{Playlists},
+    props: { Playlists: Array },
+    methods: {
+        loadPlaylists(){     
+            api.getPlaylists().then(response => {
+                this.dataPlaylists = response.data
+                this.show = false
+            })
+        }
     }
+}
 </script>
 
 
@@ -30,5 +61,8 @@
         .container-thin{
             max-width: 600px;
         }
+    }
+    .playlists{
+        padding-top: 20px;
     }
 </style>

@@ -1,7 +1,9 @@
 <template>
     <main class="page-search">
         <h1 class="main-title">Resultados de <span>{{query}}</span></h1>
-        <b-tabs>
+        <h5 v-if="!tracksTotal && !show" class="alert"><b>No hay resultados para tu busqueda</b></h5>
+        <b-overlay :show="show" rounded="sm">
+        <b-tabs v-if="tracksTotal || albumsTotal || artistsTotal">
             <b-tab id="tabAll" title="Todo" active>
                 <h2 class="title">Canciones <fa-icon icon="chevron-right" class="icon" /></h2>
                 <track-list :tracks="tracks.slice(0,6)" />
@@ -9,8 +11,8 @@
                 <h2 class="title">Álbumes <fa-icon icon="chevron-right" class="icon" /></h2>
                 <album-list :albums="albums.slice(0,6)" />
 
-                <h2 class="title">Artistas <fa-icon icon="chevron-right" class="icon" /></h2>
-                <artist-list :artists="artists.slice(0,6)" />                
+                <h2 @click="clickArtist" class="title">Artistas <fa-icon icon="chevron-right" class="icon" /></h2>
+                <artist-list @click="clickArtist" :artists="artists.slice(0,6)" />                
 
             </b-tab>            
             <b-tab id="tabTracks" title="Canciones">
@@ -23,40 +25,91 @@
             </b-tab>            
             <b-tab id="tabArtists" title="Artistas">
                 <h2 class="title">{{artistsTotal}} artistas</h2>
-                <artist-list :artists="artists" />
+                <artist-list @click="clickArtist" :artists="artists" />
             </b-tab>
         </b-tabs>
+        </b-overlay>
     </main>
 </template>
 
 <script>
 
-import albumsjson from "@/json/albums.json";
-import artistsjson from "@/json/artists.json";
-import tracksjson from "@/json/tracks.json";
 import TrackList from '@/components/Tracks/TrackList'
 import AlbumList from '@/components/Albums/AlbumList'
 import ArtistList from '@/components/Artists/ArtistList'
+import api from '@/api/api'
 
 export default {
     name:'SearchResults',
     components:{ AlbumList, ArtistList, TrackList },
     data(){
         return{
-            tracks: tracksjson.data,
-            albums: albumsjson.data,
-            artists: artistsjson.data,
-            tracksTotal: tracksjson.total,
-            albumsTotal: albumsjson.total,
-            artistsTotal: artistsjson.total,
-            query: this.$route.params.q || ''
+            tracks: [],
+            albums: [],
+            artists: [],
+            tracksTotal: 0,
+            albumsTotal: 0,
+            artistsTotal: 0,
+            query: this.$route.params.q || '',
+            show: true
         }
+    },
+    created() {
+        this.search()
+        this.updateTracks()
+        this.updateAlbums()
+        this.updateArtists()
     },    
     watch: {
         '$route.params.q': function (q) {
             this.query = q
+        },
+        query(){
+            this.updateTracks()
+            this.updateAlbums()
+            this.updateArtists()
         }
-    }, 
+    },
+    methods: {
+        search(){
+            // vamos a la página de resultados pasando el valor de 'query' por parámetro
+            this.$router.push({
+                name: 'search',
+                params: { q: this.query },
+            }).catch(() => {});
+            if (this.query == ""){
+                this.show = false
+            }
+        },
+        updateTracks(){
+            api.getTracks(this.query).then(response => {
+                this.tracks = response.data
+                this.tracksTotal = response.data.length
+                this.show = false
+            })
+        },
+        updateAlbums(){
+            api.getAlbums(this.query).then(response => {
+                this.albums = response.data
+                this.albumsTotal = response.data.length
+                this.show = false
+            })
+        },
+        updateArtists(){
+            api.getArtists(this.query).then(response => {
+                this.artists = response.data
+                this.artistsTotal = response.data.length
+                this.show = false
+            })
+        },
+        clickArtist(){
+            alert("EYYAA")
+            this.$router.push({
+                name: 'artist',
+                params: { q: this.query },
+            }).catch(() => {});
+        }
+    } 
 }
 </script>
 
@@ -102,6 +155,10 @@ export default {
             section{
                 margin-bottom: 30px;
             }
+        }
+
+        .alert{
+            color: red;
         }
     }
 

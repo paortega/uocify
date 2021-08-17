@@ -1,4 +1,6 @@
-const path = require('path');
+// const path = require('path');
+
+const cors = require('cors');
 
 module.exports = {
   css: {

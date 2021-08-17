@@ -2,7 +2,7 @@
     <header class="header">
         <div class="header-container container-fluid">
             <router-link to="/">
-                <img class="logo" src="@/assets/logo.svg" alt="Logo de uocify">
+                <img class="logo" src="@/assets/logo1.svg" alt="Logo de uocify">
                 <img class="icono" src="@/assets/icon.svg" alt="Icono de uocify">
             </router-link>		            
             <search-bar />
@@ -70,8 +70,8 @@
         z-index: 100;
 
         .logo{
-            width: 170px;
-
+            width: 50px;
+            margin-right: 20px;
             @media #{$max-sm} {
                 display: none;
             } 

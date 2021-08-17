@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home'
 import SearchResults from '@/views/SearchResults'
+import Playlist from '@/views/Playlist'
+import Artist from '@/views/Artist'
 import Login from '@/views/Login'
 import Register from '@/views/Register'
 import NotFound from '@/views/NotFound'
@@ -28,7 +30,17 @@ Vue.use(VueRouter)
     path: '/search/:q',
     name:'search',
     component: SearchResults
-  },  
+  },
+  {
+    path: '/playlist/:q',
+    name:'playlist',
+    component: Playlist
+  },
+  {
+    path: '/artist/:q',
+    name:'artist',
+    component: Artist
+  },   
   {
       path: '*',
       name:'notfound',
